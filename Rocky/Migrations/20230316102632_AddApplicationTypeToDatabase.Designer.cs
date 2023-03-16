@@ -9,8 +9,8 @@ using Rocky.Data;
 namespace Rocky.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230314133702_addCategoryToDatabase")]
-    partial class AddCategoryToDatabase
+    [Migration("20230316102632_AddApplicationTypeToDatabase")]
+    partial class AddApplicationTypeToDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,21 @@ namespace Rocky.Migrations
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
+
+            modelBuilder.Entity("Rocky.Models.ApplicationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationType");
+                });
 
             modelBuilder.Entity("Rocky.Models.Category", b =>
                 {

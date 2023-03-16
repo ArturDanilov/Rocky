@@ -25,5 +25,15 @@ namespace Rocky.Controllers
         {
 			return View();
 		}
+
+        //POST - Create
+        [HttpPost]
+        [ValidateAntiForgeryToken] //предотвращает межсайтовую подделку запросов
+        public IActionResult Create(Category obj)
+		{
+			_db.Category.Add(obj); //добавляем в контекст
+			_db.SaveChanges(); //сохраняем изменения в базе данных
+			return RedirectToAction("Index"); //переадресация на Index
+		}
     }
 }
