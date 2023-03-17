@@ -20,20 +20,89 @@ namespace Rocky.Controllers
             return View(objects);
         }
 
-        //GET - Create
+
+        //GET - CREATE
         public IActionResult Create()
         {
 			return View();
 		}
 
-        //POST - Create
+
+        //POST - CREATE
         [HttpPost]
         [ValidateAntiForgeryToken] //предотвращает межсайтовую подделку запросов
         public IActionResult Create(Category obj)
 		{
-			_db.Category.Add(obj); //добавляем в контекст
-			_db.SaveChanges(); //сохраняем изменения в базе данных
-			return RedirectToAction("Index"); //переадресация на Index
+            if (ModelState.IsValid) //проверка на валидность
+            {
+				_db.Category.Add(obj); //добавляем в контекст
+				_db.SaveChanges(); //сохраняем изменения в базе данных
+				return RedirectToAction("Index"); //переадресация на Index
+			}
+            return View(obj);
 		}
+
+		//GET - EDIT
+		public IActionResult Edit(int? id)
+		{
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+
+			var obj = _db.Category.Find(id);
+
+			if (obj == null)
+			{
+				return NotFound();
+			}
+
+			return View(obj);
+        }
+
+        //POST - EDIT
+        [HttpPost]
+        [ValidateAntiForgeryToken] //предотвращает межсайтовую подделку запросов
+
+        public IActionResult Edit(Category obj)
+        {
+            if (ModelState.IsValid) //проверка на валидность
+            {
+                _db.Category.Update(obj); //обновляем в контексте
+                _db.SaveChanges(); //сохраняем изменения в базе данных
+                return RedirectToAction("Index"); //переадресация на Index
+            }
+            return View(obj);
+        }
+
+        //GET - DELETE 
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.Category.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        //POST - DELETE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var obj = _db.Category.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Category.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

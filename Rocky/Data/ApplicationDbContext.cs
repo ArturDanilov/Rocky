@@ -10,6 +10,6 @@ namespace Rocky.Data
         }
 
         public DbSet<Category> Category { get; set; } //тут мы создаем таблицу Category в базе данных
-        public DbSet<ApplicationType> ApplicationType { get; set; } //тут мы создаем таблицу ApplicationType в базе данных
+        public  DbSet<ApplicationType> ApplicationType { get; set; } //тут мы создаем таблицу ApplicationType в базе данных
     }
 }
